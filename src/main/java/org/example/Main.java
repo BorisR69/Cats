@@ -1,8 +1,10 @@
 package org.example;
 
+import org.apache.http.HttpHeaders;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.entity.ContentType;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 
@@ -12,6 +14,8 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) throws IOException {
+        String url = "https://raw.githubusercontent.com/netology-code/jd-homeworks/master/http/task1/cats";
+//        String url = "https://jsonplaceholder.typicode.com/posts";
 
         CloseableHttpClient httpClient = HttpClientBuilder.create()
                 .setDefaultRequestConfig(RequestConfig.custom()
@@ -21,7 +25,8 @@ public class Main {
                         .build())
                 .build();
         // Объект запроса
-        HttpGet request = new HttpGet("https://raw.githubusercontent.com/netology-code/jd-homeworks/master/http/task1/cats");
+        HttpGet request = new HttpGet(url);
+        request.setHeader(HttpHeaders.ACCEPT, ContentType.APPLICATION_JSON.getMimeType());
         // Отправка запроса
         CloseableHttpResponse response = httpClient.execute(request);
         // Вывод полученных заголовков
@@ -29,7 +34,7 @@ public class Main {
         // Чтение тела ответа
 //        String body = new String(response.getEntity().getContent().readAllBytes(), StandardCharsets.UTF_8);
 //        System.out.println("Body: " + body);
-
-
+        response.close();
+        httpClient.close();
     }
 }
