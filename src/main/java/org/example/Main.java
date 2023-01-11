@@ -32,8 +32,8 @@ public class Main {
         // Вывод полученных заголовков
         Arrays.stream(response.getAllHeaders()).forEach(System.out::println);
         // Чтение тела ответа
-//        String body = new String(response.getEntity().getContent().readAllBytes(), StandardCharsets.UTF_8);
-//        System.out.println("Body: " + body);
+        String body = new String(response.getEntity().getContent().readAllBytes(), StandardCharsets.UTF_8);
+        System.out.println(body);
         response.close();
         httpClient.close();
     }
