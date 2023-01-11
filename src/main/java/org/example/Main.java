@@ -7,6 +7,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -20,9 +22,13 @@ public class Main {
                 .build();
         // Объект запроса
         HttpGet request = new HttpGet("https://raw.githubusercontent.com/netology-code/jd-homeworks/master/http/task1/cats");
-        // Вызов удаленного сервиса
+        // Отправка запроса
         CloseableHttpResponse response = httpClient.execute(request);
-        System.out.println(response);
+        // Вывод полученных заголовков
+        Arrays.stream(response.getAllHeaders()).forEach(System.out::println);
+        // Чтение тела ответа
+//        String body = new String(response.getEntity().getContent().readAllBytes(), StandardCharsets.UTF_8);
+//        System.out.println("Body: " + body);
 
 
     }
